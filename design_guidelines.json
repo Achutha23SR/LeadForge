@@ -1,0 +1,99 @@
+{
+  "project_name": "LeadForge",
+  "app_type": "hybrid_fullstack",
+  "archetype": "THE PERFORMANCE PRO & SWISS B2B PRECISION",
+  "design_tone": "Restrained, ultra-polished, high-density B2B SaaS prospecting workspace with dark navy accents, crisp typography, and spacious data tables",
+  "color_palette": {
+    "theme_mode": "dark_first_with_light_support",
+    "background_primary": "#0A0D14",
+    "background_secondary": "#101622",
+    "background_tertiary": "#161F30",
+    "surface_card": "#121A29",
+    "surface_card_hover": "#1A2538",
+    "surface_border": "#1E2B42",
+    "surface_border_subtle": "#162236",
+    "accent_primary": "#2563EB",
+    "accent_primary_hover": "#1D4ED8",
+    "accent_deep_navy": "#0F172A",
+    "accent_cyan_glow": "#38BDF8",
+    "status_verified_green": "#10B981",
+    "status_pending_amber": "#F59E0B",
+    "status_failed_red": "#EF4444",
+    "status_risky_purple": "#A855F7",
+    "text_primary": "#F8FAFC",
+    "text_secondary": "#94A3B8",
+    "text_muted": "#64748B",
+    "text_accent": "#60A5FA"
+  },
+  "typography": {
+    "font_family_heading": "Plus Jakarta Sans, sans-serif",
+    "font_family_body": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+    "font_family_mono": "JetBrains Mono, monospace",
+    "font_rules": {
+      "H1": "text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-50",
+      "H2": "text-2xl sm:text-3xl font-bold tracking-tight text-slate-100",
+      "H3": "text-lg sm:text-xl font-semibold text-slate-200",
+      "Table_Headers": "text-xs font-semibold uppercase tracking-wider text-slate-400 bg-slate-900/80",
+      "Data_Cells": "text-sm text-slate-200 font-normal",
+      "Badges": "text-xs font-medium tracking-wide uppercase px-2 py-0.5 rounded-full",
+      "Code_Mono": "font-mono text-xs text-blue-300 bg-slate-950/60 px-1.5 py-0.5 rounded border border-slate-800"
+    }
+  },
+  "spacing_and_layout": {
+    "sidebar_width": "w-64 flex-shrink-0 border-r border-slate-800 bg-[#0B101D]",
+    "main_content_area": "flex-1 overflow-y-auto bg-[#0A0D14] p-6 sm:p-8 lg:p-10",
+    "grid_dashboard": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8",
+    "grid_lead_search": "grid grid-cols-1 lg:grid-cols-12 gap-6",
+    "table_container": "w-full overflow-x-auto rounded-xl border border-slate-800 bg-[#121A29]/90 shadow-2xl backdrop-blur-md",
+    "table_padding": "px-6 py-4 whitespace-nowrap",
+    "card_padding": "p-6 sm:p-8"
+  },
+  "components_and_patterns": {
+    "data_tables": "Spacious, interactive data grid with column sorting, checkable rows, bulk enrich/export actions, status chips, and slide-over lead detail panel",
+    "navigation_header": "Sticky glass header (bg-[#0A0D14]/80 backdrop-blur-xl border-b border-slate-800/80 z-40) with search bar, credit balance pill counter, job status ticker, and quick action buttons",
+    "sidebar": "Responsive Collapsible Sidebar featuring active indicator bar, credit usage widget, scraping jobs shortcut, and clean grouped section links",
+    "filters_bar": "Multi-tier filter bar with Industry, Revenue, Employee Count, Location, Tech Stack, and Email Deliverability status badges",
+    "modals_and_drawers": "Shadcn Dialog and Sheet with opaque dark surfaces (bg-[#121A29] border border-slate-800), backdrop-blur-md, clear headers, and explicit action buttons",
+    "charts": "Recharts responsive area & bar charts with dark slate grid lines, blue/cyan gradient fills, custom HTML tooltips with high contrast",
+    "toasts": "Sonner dark notifications with custom icons for Scrape completed, Email validated, Lead enriched, and CSV exported"
+  },
+  "motion_and_interactions": {
+    "hover_effects": "transition-all duration-200 ease-out hover:bg-slate-800/60 hover:border-slate-700/80",
+    "button_press": "active:scale-[0.98] transition-transform duration-100",
+    "slide_over": "framer-motion or CSS slide-in-from-right duration-300 ease-out for detail panel",
+    "pulse_live_jobs": "animate-pulse status dot for active scraping background jobs"
+  },
+  "image_urls": {
+    "team_office_1": {
+      "url": "https://images.unsplash.com/photo-1576267423048-15c0040fec78?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBjb3Jwb3JhdGUlMjB0ZWNoJTIwb2ZmaWNlJTIwcHJvZmVzc2lvbmFsJTIwYnVzaW5lc3MlMjB0ZWFtJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkxNTQ1MDAxfDA&ixlib=rb-4.1.0&q=85",
+      "category": "hero_team",
+      "description": "Diverse B2B sales team analyzing data on laptops in modern glass office"
+    },
+    "team_office_2": {
+      "url": "https://images.unsplash.com/photo-1758691736975-9f7f643d178e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHxfHxtb2Rlcm4lMjBjb3Jwb3JhdGUlMjB0ZWNoJTIwb2ZmaWNlJTIwcHJvZmVzc2lvbmFsJTIwYnVzaW5lc3MlMjB0ZWFtJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkxNTQ1MDAxfDA&ixlib=rb-4.1.0&q=85",
+      "category": "about_company",
+      "description": "Executive team portrait in enterprise software company"
+    },
+    "hq_building_1": {
+      "url": "https://images.unsplash.com/photo-1576731753569-3e93a228048c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwyfHx0ZWNoJTIwY29tcGFueSUyMG9mZmljZSUyMGJ1aWxkaW5nJTIwZXh0ZXJpb3IlMjBtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzkxNTQ1MDA5fDA&ixlib=rb-4.1.0&q=85",
+      "category": "company_profile_placeholder",
+      "description": "Modern corporate glass headquarters exterior"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Always apply data-testid to every interactive component (buttons, inputs, filters, table rows, checkboxes, dropdown items, tabs, modals).",
+    "Use dark navy and slate neutral dark backgrounds (#0A0D14, #121A29, #1E2B42) with bright blue (#2563EB, #60A5FA) accents for active states.",
+    "Ensure table cells have sufficient breathing room (px-6 py-4) and crisp subtle borders (border-slate-800).",
+    "Support complete lead prospecting flow: Search filters, lead select, enrichment trigger, real-time validation, list allocation, scraping job progress indicator, credit deduction, and CSV download.",
+    "Do NOT use completely transparent backgrounds on dropdowns, modals, select menus, or sheet content to prevent text overlap and clipping.",
+    "Ensure text contrast meets WCAG AA standards in all states (normal, hover, active, focus). Explicitly pair dark background hovers with white or bright text (e.g. hover:bg-slate-800 hover:text-white).",
+    "Wrap stateful updates in TanStack Query mutations/queries with deterministic backend fallback handling so the application is fast, real, and fully functional."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": {
+    "data_testid_requirement": "CRITICAL: All interactive elements (buttons, inputs, select menus, links, checkboxes, modal triggers) MUST contain unique kebab-case data-testid attributes.",
+    "avoid_ai_slop": "Do not use plain default white backgrounds or generic centered single-column layouts. Build rich B2B grid workspaces with slide-over drawers, metrics cards, table toolbar filters, and credit indicators.",
+    "no_emoji_icons": "Never use emoji characters (e.g., 🤖🧠💭💡🔮) as UI icons. Use Lucide icons (lucide-react).",
+    "toast_system": "Use Sonner for toast feedback on all primary actions (e.g., Lead Saved, CSV Exported, Enrichment Started, Scraper Job Queued).",
+    "component_imports": "Import Shadcn UI components from src/components/ui/ and icons from lucide-react."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "passed": 16,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [],
+  "retest_needed": false,
+  "checks": [
+    {"criterion":"User can sign in and reach the LeadForge dashboard","name":"auth-dashboard-api","lane":"backend","status":"passed","evidence":"POST /api/auth/login 200; GET /api/dashboard 200 with 4 metrics and credits."},
+    {"criterion":"User can search leads with combined filters","name":"lead-search-api","lane":"backend","status":"passed","evidence":"POST /api/leads/search 200; filtered SaaS/United States response returned 3 total results with pagination metadata."},
+    {"criterion":"User can inspect, enrich, and validate a lead","name":"lead-actions-api","lane":"backend","status":"passed","evidence":"GET /api/leads/{id} 200; POST enrich 200 enriched=true; POST validate 200 with email status."},
+    {"criterion":"User can save leads to a list","name":"save-leads-api","lane":"backend","status":"passed","evidence":"POST /api/lists/{id}/leads 200 added=1; GET list detail 200 with lead_count=1."},
+    {"criterion":"User can create and inspect lead lists","name":"lists-api","lane":"backend","status":"passed","evidence":"POST /api/lists 200; GET /api/lists/{id} 200 with created list name and member detail."},
+    {"criterion":"User can start and monitor a scraping job","name":"scraping-jobs-api","lane":"backend","status":"passed","evidence":"POST /api/scraping/jobs 200 QUEUED; polling GET job 200 reached COMPLETED, progress=100, discovered/enriched counts >0."},
+    {"criterion":"User can export selected leads and see export history","name":"exports-api","lane":"backend","status":"passed","evidence":"POST /api/exports 200 COMPLETED with CSV content; GET /api/exports 200 contained returned export."},
+    {"criterion":"User can view credits and analytics","name":"credits-analytics-api","lane":"backend","status":"passed","evidence":"GET /api/credits 200 with balance/transactions; GET /api/analytics 200 with trends and country/industry breakdowns."},
+    {"criterion":"User can sign in and reach the LeadForge dashboard","name":"login-dashboard","lane":"browser","status":"passed","evidence":"Preview URL login with demo credentials reached dashboard; metric card and navigation visible."},
+    {"criterion":"User can search leads with combined filters","name":"combined-lead-search","lane":"browser","status":"passed","evidence":"Lead search UI accepted SaaS and United States filters; rendered result row, filter panel, and pagination."},
+    {"criterion":"User can inspect, enrich, and validate a lead","name":"lead-inspect-enrich-validate","lane":"browser","status":"passed","evidence":"Opened lead detail drawer and exercised Enrich and Validate actions; drawer remained visible with feedback flow."},
+    {"criterion":"User can save leads to a list","name":"save-selected-leads","lane":"browser","status":"passed","evidence":"Created isolated tscheck UI list, selected a search result, assigned it through bulk save controls."},
+    {"criterion":"User can create and inspect lead lists","name":"create-inspect-list","lane":"browser","status":"passed","evidence":"Created isolated named list and opened its list detail panel."},
+    {"criterion":"User can start and monitor a scraping job","name":"scraping-job-progress","lane":"browser","status":"passed","evidence":"Started isolated DemoLeadProvider job; job card rendered status and discovered progress fields."},
+    {"criterion":"User can export selected leads and see export history","name":"export-history","lane":"browser","status":"passed","evidence":"Selected a result, exported it, navigated to Exports, and saw COMPLETED export row."},
+    {"criterion":"User can view credits and analytics","name":"credits-analytics","lane":"browser","status":"passed","evidence":"Opened Credits via header balance link, then Analytics; balance, trend, and country breakdown surfaces visible."}
+  ]
+}
