@@ -44,3 +44,47 @@ export const apiPut = <T>(path: string, body?: JsonBody) => request<T>("PUT", pa
 export const apiPatch = <T>(path: string, body?: JsonBody) =>
   request<T>("PATCH", path, body ?? null);
 export const apiDelete = <T>(path: string) => request<T>("DELETE", path);
+
+export async function apiUpload<T>(path: string, formData: FormData): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, { method: "POST", body: formData });
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => null);
+    throw new ApiError(res.status, errBody);
+  }
+  return (await res.json()) as T;
+}
+
+export async function apiStreamPost<T>(path: string, body: JsonBody, onDelta?: (delta: string) => void): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => null);
+    throw new ApiError(res.status, errBody);
+  }
+  if (!res.body) throw new ApiError(502, { message: "Streaming response unavailable" });
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let result: T | undefined;
+  while (true) {
+    const { done, value } = await reader.read();
+    buffer += decoder.decode(value, { stream: !done });
+    const blocks = buffer.split("\n\n");
+    buffer = blocks.pop() ?? "";
+    for (const block of blocks) {
+      const event = block.split("\n").find((line) => line.startsWith("event:"))?.slice(6).trim();
+      const dataLine = block.split("\n").find((line) => line.startsWith("data:"));
+      if (!dataLine) continue;
+      const data = JSON.parse(dataLine.slice(5).trim()) as { delta?: string; message?: string } & T;
+      if (event === "delta" && data.delta) onDelta?.(data.delta);
+      if (event === "result") result = data as T;
+      if (event === "error") throw new ApiError(502, data);
+    }
+    if (done) break;
+  }
+  if (!result) throw new ApiError(502, { message: "The AI response ended unexpectedly" });
+  return result;
+}

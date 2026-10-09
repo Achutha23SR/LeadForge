@@ -24,6 +24,7 @@ INDEXES: dict[str, list[IndexModel]] = {
         IndexModel([("id", ASCENDING)], name="company_id", unique=True),
         IndexModel([("domain", ASCENDING)], name="company_domain", unique=True),
         IndexModel([("industry", ASCENDING), ("country", ASCENDING)], name="company_filters"),
+        IndexModel([("favorite", ASCENDING), ("name", ASCENDING)], name="company_favorite_name"),
     ],
     "contacts": [IndexModel([("id", ASCENDING)], name="contact_id", unique=True), IndexModel([("email", ASCENDING)], name="contact_email")],
     "leads": [
@@ -35,6 +36,9 @@ INDEXES: dict[str, list[IndexModel]] = {
     "scraping_jobs": [IndexModel([("owner_id", ASCENDING), ("created_at", DESCENDING)], name="job_owner_created"), IndexModel([("status", ASCENDING)], name="job_status")],
     "exports": [IndexModel([("owner_id", ASCENDING), ("created_at", DESCENDING)], name="export_owner_created")],
     "credit_transactions": [IndexModel([("user_id", ASCENDING), ("created_at", DESCENDING)], name="credit_user_created")],
+    "imports": [IndexModel([("owner_id", ASCENDING), ("created_at", DESCENDING)], name="import_owner_created")],
+    "email_drafts": [IndexModel([("owner_id", ASCENDING), ("created_at", DESCENDING)], name="draft_owner_created")],
+    "contact_submissions": [IndexModel([("owner_id", ASCENDING), ("created_at", DESCENDING)], name="contact_owner_created")],
 }
 
 

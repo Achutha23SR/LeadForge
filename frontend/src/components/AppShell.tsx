@@ -5,18 +5,28 @@ import type { AuthResponse } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { BarChart3, Building2, ChevronDown, CircleDollarSign, Download, FileSearch, Gauge, LayoutDashboard, ListChecks, LogOut, Menu, Search, Settings, Sparkles, UserRound, X } from "lucide-react";
+import { BarChart3, BookOpen, Building2, ChevronDown, CircleDollarSign, ContactRound, Download, FileSearch, Gauge, Import, LayoutDashboard, ListChecks, LogOut, MailPlus, Menu, Search, Settings, Sparkles, UsersRound, X } from "lucide-react";
 import { useState } from "react";
 
 const links = [
-  { label: "Overview", to: "/", icon: LayoutDashboard },
-  { label: "Lead search", to: "/leads", icon: Search },
+  { label: "Home", to: "/", icon: LayoutDashboard },
+  { label: "Scraper / Import Data", to: "/import", icon: Import },
   { label: "Companies", to: "/companies", icon: Building2 },
+  { label: "Persons", to: "/persons", icon: UsersRound },
+  { label: "Email Generator", to: "/email-generator", icon: MailPlus },
+  { label: "Documentation", to: "/documentation", icon: BookOpen },
+  { label: "Contact Us", to: "/contact", icon: ContactRound },
+];
+
+const operationLinks = [
+  { label: "Lead search", to: "/leads", icon: Search },
   { label: "Lists", to: "/lists", icon: ListChecks },
   { label: "Scraping jobs", to: "/scraping-jobs", icon: FileSearch },
   { label: "Exports", to: "/exports", icon: Download },
   { label: "Analytics", to: "/analytics", icon: BarChart3 },
 ];
+
+const navTestId = (label: string) => `nav-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}-link`;
 
 export default function AppShell() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -41,7 +51,7 @@ export default function AppShell() {
           </NavLink>
           <Button variant="ghost" size="icon-sm" className="text-slate-400 lg:hidden" onClick={() => setMobileOpen(false)} data-testid="sidebar-close-button"><X /></Button>
         </div>
-        <div className="px-4 pt-7"><p data-testid="workspace-label" className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Workspace</p><nav className="space-y-1">{links.map(({ label, to, icon: Icon }) => <NavLink key={to} to={to} end={to === "/"} onClick={() => setMobileOpen(false)} data-testid={`nav-${label.toLowerCase().replaceAll(" ", "-")}-link`} className={({ isActive }) => `group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm ${isActive ? "bg-blue-600/15 font-medium text-blue-300" : "text-slate-400 hover:bg-[#121a29] hover:text-slate-100"}`}><Icon className="h-4 w-4" /><span>{label}</span>{label === "Scraping jobs" && <span className="ml-auto h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />}</NavLink>)}</nav></div>
+        <div className="lf-scrollbar overflow-y-auto px-4 pt-6"><p data-testid="workspace-label" className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Workspace</p><nav className="space-y-1">{links.map(({ label, to, icon: Icon }) => <NavLink key={to} to={to} end={to === "/"} onClick={() => setMobileOpen(false)} data-testid={navTestId(label)} className={({ isActive }) => `group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm ${isActive ? "bg-blue-600/15 font-medium text-blue-300" : "text-slate-400 hover:bg-[#121a29] hover:text-slate-100"}`}><Icon className="h-4 w-4" /><span>{label}</span></NavLink>)}</nav><p data-testid="operations-label" className="mb-3 mt-7 px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Operations</p><nav className="space-y-1">{operationLinks.map(({ label, to, icon: Icon }) => <NavLink key={to} to={to} onClick={() => setMobileOpen(false)} data-testid={navTestId(label)} className={({ isActive }) => `group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm ${isActive ? "bg-blue-600/15 font-medium text-blue-300" : "text-slate-400 hover:bg-[#121a29] hover:text-slate-100"}`}><Icon className="h-4 w-4" /><span>{label}</span>{label === "Scraping jobs" && <span className="ml-auto h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />}</NavLink>)}</nav></div>
         <div className="mt-auto p-4"><div data-testid="sidebar-credit-card" className="rounded-xl border border-[#1e2b42] bg-[#121a29] p-4"><div className="mb-3 flex items-center justify-between"><span className="text-xs text-slate-400">Credits balance</span><CircleDollarSign className="h-4 w-4 text-blue-400" /></div><p data-testid="sidebar-credit-value" className="font-heading text-2xl font-bold text-white">{user.credits.toLocaleString()}</p><div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-800"><div className="h-full w-[28%] rounded-full bg-gradient-to-r from-blue-600 to-cyan-400" /></div><NavLink to="/credits" data-testid="manage-credits-link" className="mt-3 block text-xs font-medium text-blue-400 hover:text-blue-300">Manage credits <span aria-hidden="true">→</span></NavLink></div></div>
       </aside>
       <main className="lg:pl-64">

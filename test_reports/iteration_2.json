@@ -1,0 +1,22 @@
+{
+  "passed": 13,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [],
+  "retest_needed": false,
+  "checks": [
+    {"criterion":"Modern LeadForge dashboard and requested navigation remain usable","name":"nav-sidebar-links","lane":"browser","status":"passed","evidence":"Logged in via preview URL, dashboard app-shell visible, all 7 sidebar links (Home, Scraper / Import Data, Companies, Persons, Email Generator, Documentation, Contact Us) present and Companies/Persons navigation worked."},
+    {"criterion":"Company records support complete data-management workflow","name":"companies-workflow","lane":"browser","status":"passed","evidence":"Search, industry filter, column sort, pagination (page 1->2->1), detail drawer, favorite toggle (restored), and edit+save (description reverted after) all worked on Companies page."},
+    {"criterion":"Company records support complete data-management workflow","name":"test_tscheck_companies_api.py","lane":"backend","status":"passed","evidence":"GET /api/companies 200 with name/industry/business_type/employees/revenue/country/city/website/email fields; PATCH favorite 200 toggled and reverted; PUT /api/companies/{id} 200 updated+reverted description."},
+    {"criterion":"Companies with valid coordinates render on an interactive map","name":"companies-map-render","lane":"browser","status":"passed","evidence":"Leaflet .company-map container rendered with tiles/markers, no pageerror events captured; opened/closed a company detail drawer without crashing the map."},
+    {"criterion":"Person records support discovery and selection","name":"persons-discovery-selection","lane":"browser","status":"passed","evidence":"Persons table showed name/email/title/company/industry/location; search and industry filter accepted input; row selection surfaced selection bar + email-generator handoff link; LinkedIn link (if present) verified https/_blank."},
+    {"criterion":"Person records support discovery and selection","name":"test_tscheck_persons_api.py","lane":"backend","status":"passed","evidence":"GET /api/persons 200 with required fields; search by last name matched; page1 vs page2 (size=1) returned distinct ids; GET /api/persons/{id} 200 matched email."},
+    {"criterion":"CSV import validates, previews, deduplicates, and commits records","name":"csv-import-flow","lane":"browser","status":"passed","evidence":"Sample CSV links resolved 200; uploaded 3-row CSV (1 valid/1 duplicate/1 invalid) -> preview summary showed 1/1/1; commit produced import-complete-summary."},
+    {"criterion":"CSV import validates, previews, deduplicates, and commits records","name":"test_tscheck_imports_api.py","lane":"backend","status":"passed","evidence":"POST /api/imports/preview 200 total_rows=3 valid=1 duplicate=1 invalid=1; POST /api/imports/{id}/commit 200 imported=1; GET /api/companies?search=<domain> found the committed company."},
+    {"criterion":"AI Email Generator creates and manages personalized drafts","name":"email-generator-flow","lane":"browser","status":"passed","evidence":"Selected tone/objective/context, Generate streamed to a real subject/body (generating state then populated editor), edited subject, copy/save-draft clicked successfully, mailto: link present with valid href."},
+    {"criterion":"AI Email Generator creates and manages personalized drafts","name":"test_tscheck_email_generator_api.py","lane":"backend","status":"passed","evidence":"POST /api/email/generate streamed SSE 'result' event with non-empty subject/body via live OpenAI GPT-5.4; POST /api/email/drafts 200 saved; GET /api/email/drafts 200 contained the new draft id."},
+    {"criterion":"LinkedIn actions remain safe external links only","name":"persons-discovery-selection","lane":"browser","status":"passed","evidence":"Covered in persons-discovery-selection: LinkedIn anchor (when present) asserted href starts with http and target=_blank, no messaging/automation controls found."},
+    {"criterion":"Documentation and Contact Us are functional","name":"docs-contact-flow","lane":"browser","status":"passed","evidence":"Documentation page showed CSV-schema/API/responsible-use sections with endpoint rows; Contact form submission (tscheck fixture) produced contact-success-state."},
+    {"criterion":"Documentation and Contact Us are functional","name":"test_tscheck_contact_api.py","lane":"backend","status":"passed","evidence":"POST /api/support/contact 200 {status:'RECEIVED', id:<uuid>} with tscheck-contact fixture payload."}
+  ]
+}

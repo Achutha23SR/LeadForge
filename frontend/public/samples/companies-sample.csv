@@ -1,0 +1,3 @@
+name,domain,website,industry,business_type,employees,revenue,country,city,email,linkedin_url,founded_year,technologies,description
+Harbor Atlas,harboratlas.example,https://harboratlas.example,Logistics,B2B Software,75,$5M-$10M,United States,Portland,hello@harboratlas.example,https://linkedin.com/company/harbor-atlas,2019,React;AWS,Route intelligence for modern logistics teams
+Fable Metrics,fablemetrics.example,https://fablemetrics.example,AI & Data,B2B SaaS,42,$1M-$5M,Canada,Vancouver,team@fablemetrics.example,https://linkedin.com/company/fable-metrics,2021,Python;GCP,Decision intelligence for growth teams

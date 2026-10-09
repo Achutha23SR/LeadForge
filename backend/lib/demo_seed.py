@@ -33,6 +33,12 @@ PEOPLE = [
 
 async def seed_demo_data() -> None:
     now = datetime.now(timezone.utc)
+    coordinates = {
+        "Austin": (30.2672, -97.7431), "New York": (40.7128, -74.0060), "London": (51.5072, -0.1276),
+        "Toronto": (43.6532, -79.3832), "San Francisco": (37.7749, -122.4194), "Boston": (42.3601, -71.0589),
+        "Berlin": (52.5200, 13.4050), "Sydney": (-33.8688, 151.2093), "Seattle": (47.6062, -122.3321),
+        "Chicago": (41.8781, -87.6298), "Paris": (48.8566, 2.3522), "Denver": (39.7392, -104.9903),
+    }
     demo = await db.users.find_one({"email": "demo@leadforge.ai"})
     if not demo:
         await db.users.insert_one({
@@ -49,6 +55,18 @@ async def seed_demo_data() -> None:
         })
 
     if await db.companies.count_documents({}) > 0:
+        existing = await db.companies.find({}).to_list(1000)
+        for company in existing:
+            lat, lng = coordinates.get(company.get("city", ""), (None, None))
+            additions = {
+                "business_type": company.get("business_type", "B2B Software"),
+                "email": company.get("email", f"hello@{company['domain']}"),
+                "linkedin_url": company.get("linkedin_url", f"https://linkedin.com/company/{company['domain'].split('.')[0]}"),
+                "latitude": company.get("latitude", lat), "longitude": company.get("longitude", lng),
+                "favorite": company.get("favorite", False),
+            }
+            await db.companies.update_one({"id": company["id"]}, {"$set": additions})
+            await db.leads.update_many({"company_id": company["id"]}, {"$set": {f"company.{key}": value for key, value in additions.items()}})
         return
 
     company_docs: list[dict] = []
@@ -62,6 +80,9 @@ async def seed_demo_data() -> None:
             "industry": industry, "country": country, "city": city, "employees": employees,
             "revenue": revenue, "founded_year": 2014 + index % 8, "technologies": technologies,
             "description": f"{name} builds modern software for ambitious operating teams.", "created_at": now,
+            "business_type": "B2B Software", "email": f"hello@{domain}",
+            "linkedin_url": f"https://linkedin.com/company/{domain.split('.')[0]}", "favorite": index in (0, 4),
+            "latitude": coordinates.get(city, (None, None))[0], "longitude": coordinates.get(city, (None, None))[1],
         }
         company_docs.append(company_doc)
         for person_index, person in enumerate(PEOPLE[:3] if index % 2 == 0 else PEOPLE[3:]):

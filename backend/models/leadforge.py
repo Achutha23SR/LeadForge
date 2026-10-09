@@ -39,6 +39,12 @@ class CompanyBrief(BaseModel):
     founded_year: int
     technologies: list[str] = []
     description: str = ""
+    business_type: str = "B2B Software"
+    email: str = ""
+    linkedin_url: str = ""
+    latitude: float | None = None
+    longitude: float | None = None
+    favorite: bool = False
 
 
 class ContactBrief(BaseModel):
@@ -52,6 +58,104 @@ class ContactBrief(BaseModel):
     email: str
     phone: str | None = None
     linkedin_url: str | None = None
+
+
+class CompanyUpdate(BaseModel):
+    name: str = Field(min_length=2)
+    industry: str = Field(min_length=2)
+    business_type: str = Field(min_length=2)
+    employees: int = Field(ge=0)
+    revenue: str
+    country: str
+    city: str
+    website: str
+    email: str
+    linkedin_url: str
+    description: str = ""
+
+
+class CompanyListResponse(BaseModel):
+    items: list[CompanyBrief]
+    total: int
+    page: int
+    page_size: int
+
+
+class PersonOut(BaseModel):
+    id: str
+    first_name: str
+    last_name: str
+    email: str
+    job_title: str
+    department: str
+    seniority: str
+    location: str
+    linkedin_url: str | None = None
+    company_id: str
+    company_name: str
+    company_domain: str
+    industry: str
+    country: str
+    city: str
+
+
+class PersonListResponse(BaseModel):
+    items: list[PersonOut]
+    total: int
+    page: int
+    page_size: int
+
+
+class ImportPreviewRow(BaseModel):
+    row_number: int
+    data: dict[str, str]
+    valid: bool
+    duplicate: bool
+    errors: list[str] = []
+
+
+class ImportPreview(BaseModel):
+    id: str
+    entity_type: str
+    filename: str
+    rows: list[ImportPreviewRow]
+    total_rows: int
+    valid_rows: int
+    duplicate_rows: int
+    invalid_rows: int
+
+
+class ImportCommitResponse(BaseModel):
+    imported: int
+    skipped_duplicates: int
+    skipped_invalid: int
+    message: str
+
+
+class EmailGenerateRequest(BaseModel):
+    person_id: str
+    tone: str
+    objective: str
+    context: str = Field(default="", max_length=1500)
+
+
+class EmailDraftCreate(BaseModel):
+    person_id: str
+    tone: str
+    objective: str
+    subject: str = Field(min_length=2, max_length=200)
+    body: str = Field(min_length=10, max_length=10000)
+
+
+class EmailDraftOut(EmailDraftCreate):
+    id: str
+    created_at: datetime
+
+
+class ContactSubmission(BaseModel):
+    name: str = Field(min_length=2, max_length=100)
+    email: str = Field(min_length=5, max_length=200)
+    message: str = Field(min_length=10, max_length=3000)
 
 
 class LeadOut(BaseModel):

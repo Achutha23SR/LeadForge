@@ -1,6 +1,7 @@
 @import "@fontsource-variable/plus-jakarta-sans";
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
+@import "leaflet/dist/leaflet.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";

@@ -6,7 +6,7 @@ import os
 import logging
 from pathlib import Path
 from lib.demo_seed import seed_demo_data
-from routers import auth, companies, dashboard, exports, jobs, leads, lists
+from routers import auth, companies, dashboard, email_ai, exports, imports, jobs, leads, lists, persons, support
 
 
 ROOT_DIR = Path(__file__).parent
@@ -43,6 +43,10 @@ api_router.include_router(lists.router)
 api_router.include_router(jobs.router)
 api_router.include_router(exports.router)
 api_router.include_router(dashboard.router)
+api_router.include_router(persons.router)
+api_router.include_router(imports.router)
+api_router.include_router(email_ai.router)
+api_router.include_router(support.router)
 
 app.add_middleware(
     CORSMiddleware,
