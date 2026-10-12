@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, timezone
+
 from fastapi import APIRouter, Depends
 
 from lib.auth import get_current_user
@@ -5,8 +7,24 @@ from lib.db import db
 from models.leadforge import AnalyticsResponse, DashboardMetric, DashboardResponse
 from routers.jobs import job_out
 
-
 router = APIRouter(tags=["dashboard"])
+
+
+def _last_7_days_series(leads: list[dict]) -> list[dict]:
+    """Return a list of 7 dicts with date + leads + verified counts for the last 7 days."""
+    today = datetime.now(timezone.utc).date()
+    days = [(today - timedelta(days=6 - i)) for i in range(7)]
+    day_leads: dict = {d: 0 for d in days}
+    day_verified: dict = {d: 0 for d in days}
+    for lead in leads:
+        created = lead.get("created_at")
+        if isinstance(created, datetime):
+            d = created.date()
+            if d in day_leads:
+                day_leads[d] += 1
+                if lead.get("email_status") == "VERIFIED":
+                    day_verified[d] += 1
+    return [{"date": d.strftime("%b %-d"), "leads": day_leads[d], "verified": day_verified[d]} for d in days]
 
 
 async def lead_docs():
@@ -32,7 +50,7 @@ async def get_dashboard(user: dict = Depends(get_current_user)):
     ]
     return DashboardResponse(
         metrics=metrics,
-        leads_over_time=[{"date": f"Jun {day}", "leads": 18 + day * 3, "verified": 10 + day * 2} for day in range(1, 8)],
+        leads_over_time=_last_7_days_series(leads),
         industry_breakdown=[{"name": key, "value": value} for key, value in sorted(industry_counts.items(), key=lambda item: item[1], reverse=True)[:6]],
         recent_jobs=[job_out(job) for job in jobs], credits=int(user_doc.get("credits", 0)), credit_used=int(user_doc.get("credit_used", 0)),
     )
@@ -54,7 +72,7 @@ async def get_analytics(user: dict = Depends(get_current_user)):
     return AnalyticsResponse(
         total_leads=len(leads), verified_emails=verified, enrichment_rate=round(enriched / len(leads) * 100) if leads else 0,
         validation_rate=round(verified / len(leads) * 100) if leads else 0, credits_consumed=int(user_doc.get("credit_used", 0)),
-        leads_over_time=[{"date": f"Jun {day}", "leads": 18 + day * 3, "verified": 10 + day * 2} for day in range(1, 8)],
+        leads_over_time=_last_7_days_series(leads),
         by_country=[{"name": key, "value": value} for key, value in by_country.items()],
         by_industry=[{"name": key, "value": value} for key, value in by_industry.items()],
         by_seniority=[{"name": key, "value": value} for key, value in by_seniority.items()],

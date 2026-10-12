@@ -1,0 +1,114 @@
+{
+  "passed": 15,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [],
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "Login with demo credentials",
+      "name": "test_tscheck_auth_dashboard.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "POST /auth/login 200 with demo@leadforge.ai/demo1234 (invalid password correctly rejected 401); GET /dashboard 200 with >=4 metrics and credits field."
+    },
+    {
+      "criterion": "Login with demo credentials; Dashboard shows dynamic date and greeting",
+      "name": "login-dashboard-dynamic-date",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Logged in via preview URL with demo@leadforge.ai/demo1234, landed on dashboard-page. dashboard-eyebrow contains current year (not hardcoded 'June 2025'), dashboard-title greeting includes first name 'Alex', activity-leads-bar-0 rendered with non-zero height."
+    },
+    {
+      "criterion": "Lead search consumes credits and updates header counter",
+      "name": "test_tscheck_lead_search.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "POST /leads/search 200 with industry=SaaS/country=United States filters returning paginated items (total>=len(items), items>0); unauthenticated search correctly rejected 401/403."
+    },
+    {
+      "criterion": "Lead search consumes credits and updates header counter",
+      "name": "lead-search-consumes-credit",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "On /leads, clicked run-search-button; results-summary appeared, toast text matched /matching leads? found/i, header-credits-link value decreased by exactly 1 after the search."
+    },
+    {
+      "criterion": "Lead enrich and validate actions work",
+      "name": "test_tscheck_lead_actions.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /leads/{id} 200; POST /leads/{id}/enrich 200 enriched=true; POST /leads/{id}/validate 200 email_status in (VERIFIED,RISKY,INVALID)."
+    },
+    {
+      "criterion": "Lead enrich and validate actions work",
+      "name": "lead-enrich-validate-credits",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Clicked lead-enrich-button-0 on first search result -> credits dropped by exactly 2 and detail drawer auto-opened with updated lead; closed drawer, clicked lead-validate-button-0 -> lead-status-0 badge populated with a non-empty status after drawer closed."
+    },
+    {
+      "criterion": "Companies page loads and search/filter works",
+      "name": "test_tscheck_companies_api.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /api/companies 200 returning name/industry/business_type/employees/revenue/country/city fields; PATCH favorite and PUT company update both 200 (reverted after assertion)."
+    },
+    {
+      "criterion": "Companies page loads and search/filter works",
+      "name": "companies-search-filter",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "/companies pagination footer showed 12 total companies (>=10 required); selecting industry filter 'SaaS' narrowed the pagination total to a smaller number and every visible company-industry-* badge read exactly 'SaaS'."
+    },
+    {
+      "criterion": "Persons page loads with data and LinkedIn links visible",
+      "name": "test_tscheck_persons_api.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /api/persons 200 with required fields; search/pagination (page1 vs page2, size=1) returned distinct ids; GET /api/persons/{id} 200 matched email."
+    },
+    {
+      "criterion": "Persons page loads with data and LinkedIn links visible",
+      "name": "persons-table-linkedin-checkbox",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "/persons table rendered >=10 person-row-* entries, person-linkedin-link-0 href started with http, person-select-checkbox-0 checked successfully and surfaced person-selection-bar."
+    },
+    {
+      "criterion": "Email Generator AI produces an email",
+      "name": "test_tscheck_email_generator_api.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "POST /api/email/generate streamed SSE result event with non-empty subject/body via live OpenAI GPT-5.4; POST/GET /api/email/drafts 200 confirmed persisted draft."
+    },
+    {
+      "criterion": "Email Generator AI produces an email",
+      "name": "email-generator-produces-email",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Selected a person on /email-generator, clicked generate-email-button; within ~15s generated-email-subject-input and generated-email-body-input populated with non-empty real content, no 503 shown."
+    },
+    {
+      "criterion": "Lists creation and lead saving works",
+      "name": "test_tscheck_lists.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "POST /lists 200; POST /lists/{id}/leads 200 added=1; GET /lists/{id} 200 contained the created list name and the just-added lead."
+    },
+    {
+      "criterion": "Lists creation and lead saving works",
+      "name": "test_tscheck_save_leads.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "Covers save-to-list happy path for search results (POST /lists/{id}/leads 200 with added count, GET list detail shows lead_count reflecting save)."
+    },
+    {
+      "criterion": "Lists creation and lead saving works",
+      "name": "lists-create-new-list",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "On /lists, entered fixture name 'tscheck-list-<timestamp>' into new-list-input, clicked create-list-button; new list card with that exact name appeared in the list grid."
+    }
+  ]
+}

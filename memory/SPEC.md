@@ -16,7 +16,9 @@ MongoDB collections: users, companies, contacts, leads, lists, scraping_jobs, ex
 - Companies supports server-side search/filter/sort/pagination, detail/edit, favorites, external website/LinkedIn links, and an OpenStreetMap/Leaflet coordinate view.
 - Persons supports server-side search/filter/pagination, multi-selection, external LinkedIn links, and direct handoff to the email composer.
 - CSV import validates UTF-8 company or person files, previews row errors and duplicates, and commits only valid non-duplicate rows. Companies dedupe by normalized domain; persons by lowercase email.
-- The AI Email Generator streams OpenAI GPT-5.4 output through the FastAPI backend, supports tone/objective/context controls, editable subject/body, clipboard copy, MongoDB draft saving, and mail-client links.
+- Dashboard uses today's real date and dynamic time-based greeting (Good morning/afternoon/evening) with the logged-in user's first name. Lead activity chart uses real last-7-days dates.
+- Credits header counter refreshes after every lead search, enrich, or validate action (invalidates ["me"] query).
+- AI Email Generator is configured with EMERGENT_LLM_KEY and streams GPT-5.4 output live.
 - Documentation describes API and CSV schemas. Contact Us saves authenticated workspace submissions in MongoDB.
 
 ## Auth and roles
